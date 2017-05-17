@@ -3,7 +3,11 @@ class Actor
   @@actors = []
 
   def self.all
-    @@actors
+    if self == Actor
+      @@actors
+    else
+      @@actors.select{ |actor| actor.is_a? self }
+    end
   end
 
   def self.each(&block)

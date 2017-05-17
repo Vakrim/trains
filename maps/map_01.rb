@@ -1,10 +1,15 @@
-p1 = RailNode.new(x: 30, y: 30)
-p2 = RailNode.new(x: 200, y: 30)
-p3 = RailNode.new(x: 200, y: 200)
-p4 = RailNode.new(x: 300, y: 200)
+p1 = RailNode.create_at Vector[30, 30]
+p2 = RailNode.create_at Vector[100, 30]
+p3 = RailNode.create_at Vector[100, 100]
+p4 = RailNode.create_at Vector[200, 100]
 
-r1 = Rail.new(start: p1, finish: p2)
-r2 = Rail.new(start: p2, finish: p3)
-r3 = Rail.new(start: p3, finish: p4)
+Rail.new(start: p1, finish: p2)
+Rail.new(start: p2, finish: p3)
+Rail.new(start: p2, finish: p4)
+Rail.new(start: p3, finish: p4)
+Rail.new(start: p4, finish: p3)
+Rail.new(start: p4, finish: p1)
 
-Train.new(rail: r1)
+3.times {
+  Train.new(rail: Rail.all.sample)
+}

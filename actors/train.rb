@@ -11,7 +11,7 @@ class Train < Actor
   def draw
     pos = position
     color = Gosu::Color::RED
-    Gosu::draw_rect(pos[:x] - 2, pos[:y] - 2, 4, 4, color)
+    Gosu::draw_rect(pos[0] - 2, pos[1] - 2, 4, 4, color)
   end
 
   def position
@@ -19,6 +19,15 @@ class Train < Actor
   end
 
   def update(tick)
-    @d = @d + tick * 20
+    @d = @d + tick * 80
+    select_new_rail if @d > rail.length
+  end
+
+  private
+
+  def select_new_rail
+    current_rail_end_node = rail.finish
+    @rail = Rail.all.select{ |rail| rail.start == current_rail_end_node }.sample
+    @d = 0
   end
 end
