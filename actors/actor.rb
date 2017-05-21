@@ -1,4 +1,5 @@
 class Actor
+  extend Enumerable;
 
   @@actors = []
 

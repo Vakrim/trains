@@ -1,4 +1,6 @@
 class RailNode < Actor
+  include HasPosition
+  extend HasPosition::ClassMethods
 
   attr_accessor :position
 
@@ -12,7 +14,11 @@ class RailNode < Actor
   end
 
   def draw
-    color = Gosu::Color::WHITE
-    Gosu::draw_rect(position[0] - 2, position[1] - 2, 4, 4, color)
+    # color = Gosu::Color::WHITE
+    # Gosu::draw_rect(position[0] - 2, position[1] - 2, 4, 4, color)
+  end
+
+  def inspect
+    "#<RailNode [#{position[0]}, #{position[1]}]>"
   end
 end

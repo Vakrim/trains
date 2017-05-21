@@ -27,7 +27,7 @@ class Train < Actor
 
   def select_new_rail
     current_rail_end_node = rail.finish
-    @rail = Rail.all.select{ |rail| rail.start == current_rail_end_node }.sample
+    @rail = Rail.select{ |rail| rail.start == current_rail_end_node }.sample || Rail.to_a.sample
     @d = 0
   end
 end
