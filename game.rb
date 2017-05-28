@@ -6,7 +6,7 @@ class GameWindow < Gosu::Window
    super(640, 480, false)
    self.caption = 'Hello World!'
 
-   require './maps/map_01.rb'
+   require './maps/map_02.rb'
 
    @fps_text = Gosu::Font.new(24)
    @game_time = 0

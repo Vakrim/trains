@@ -3,6 +3,7 @@ require 'ostruct'
 require 'pry'
 require 'matrix'
 require 'set'
+require 'weakref'
 
 Dir[File.dirname(__FILE__) + '/concepts/*.rb'].each {|file| require file }
 

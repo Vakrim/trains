@@ -3,8 +3,9 @@ class Rail < Actor
   attr_accessor :start, :finish
 
   def self.create(start, finish)
-    return if find { |rail| rail.start == start && rail.finish == finish }
+    return false if find { |rail| (rail.start == start && rail.finish == finish) || (rail.start == finish && rail.finish == start)  }
     new({start: start, finish: finish})
+    true
   end
 
   def initialize(options = {})
@@ -13,26 +14,16 @@ class Rail < Actor
     @finish = options.fetch :finish
   end
 
-  # def extend_to(x, y)
-  #   new_finish = RailNode.create_at(x, y)
-  #   Rail.new.tap do |r|
-  #     r.start = finish
-  #     r.finish = new_finish
-  #   end
-  # end
-
   def draw
     color1 = Gosu::Color::WHITE
-    color2 = Gosu::Color::GREEN
-
-    padding = Vector[direction[1], -direction[0]] * 2
+    color2 = Gosu::Color::WHITE
 
     Gosu::draw_line(
-      start.position[0] + padding[0],
-      start.position[1] + padding[1],
+      start.position[0],
+      start.position[1],
       color1,
-      finish.position[0] + padding[0],
-      finish.position[1] + padding[1],
+      finish.position[0],
+      finish.position[1],
       color2
     )
   end
@@ -47,5 +38,18 @@ class Rail < Actor
 
   def position_at(d)
     start.position + direction * d
+  end
+
+  def type_of_node(node)
+    return :start if node == self.start
+    return :finish if node == self.finish
+  end
+
+  def next_rails(node_type)
+    node = {
+      start: start,
+      finish: finish
+    }[node_type]
+    node.next_rails(self)
   end
 end
