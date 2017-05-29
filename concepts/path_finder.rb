@@ -27,21 +27,20 @@ class PathFinder
       open_set.delete(current)
       closed_set.add(current)
 
-      Rail.select { |rail| rail.start == current }.each do |rail|
-        neighbor = rail.finish
-        continue if closed_set.include? neighbor
+      current.next_rails.each do |rail|
+        continue if closed_set.include? rail
 
         tentative_g_score = g_score[current] + rail.length
 
-        if !open_set.include?(neighbor)
-          open_set.add(neighbor)
-        elsif tentative_g_score >= g_score[neighbor]
+        if !open_set.include?(rail)
+          open_set.add(rail)
+        elsif tentative_g_score >= g_score[rail]
           continue
         end
 
-        came_from[neighbor] = current
-        g_score[neighbor] = tentative_g_score
-        f_score[neighbor] = g_score[neighbor] + heuristic_cost_estimate(neighbor, @finish)
+        came_from[rail] = current
+        g_score[rail] = tentative_g_score
+        f_score[rail] = g_score[rail] + heuristic_cost_estimate(rail, @finish)
       end
     end
 
@@ -49,7 +48,7 @@ class PathFinder
   end
 
   def heuristic_cost_estimate(a, b)
-    (a.position - b.position).r
+    (a.end_node.position - b.end_node.position).r
   end
 
   def reconstruct_path(came_from, current)

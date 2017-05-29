@@ -23,10 +23,7 @@ class RailNode < Actor
     connected_rails
       .reject { |rail| rail == last_rail }
       .map do |rail|
-        {
-          rail: rail,
-          type_of_node: rail.type_of_node(self)
-        }
+        RailDirection.new(rail, rail.type_of_node(self) == :finish ? :start : :finish)
       end
   end
 

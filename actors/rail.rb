@@ -5,7 +5,6 @@ class Rail < Actor
   def self.create(start, finish)
     return false if find { |rail| (rail.start == start && rail.finish == finish) || (rail.start == finish && rail.finish == start)  }
     new({start: start, finish: finish})
-    true
   end
 
   def initialize(options = {})
@@ -45,11 +44,14 @@ class Rail < Actor
     return :finish if node == self.finish
   end
 
-  def next_rails(node_type)
+  def node(node_type)
     node = {
       start: start,
       finish: finish
     }[node_type]
-    node.next_rails(self)
+  end
+
+  def next_rails(node_type)
+    node(node_type).next_rails(self)
   end
 end

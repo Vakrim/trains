@@ -39,16 +39,15 @@ class Train < Actor
   end
 
   def select_new_rail
-
-    new_rail_pair = rail.next_rails(direction_sym).sample
+    new_rail_pair = RailDirection.new(rail, direction_sym).next_rails.sample
 
     return unless new_rail_pair
-    self.rail = new_rail_pair[:rail]
+    self.rail = new_rail_pair.rail
 
-    if new_rail_pair[:type_of_node] == :start
+    if new_rail_pair.direction == :finish
       @d = 0
       @direction = 1
-    elsif new_rail_pair[:type_of_node] == :finish
+    elsif new_rail_pair.direction == :start
       @d = rail.length
       @direction = -1
     else
