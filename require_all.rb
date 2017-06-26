@@ -5,6 +5,8 @@ require 'matrix'
 require 'set'
 require 'weakref'
 
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
+
 Dir[File.dirname(__FILE__) + '/concepts/*.rb'].each {|file| require file }
 
 Dir[File.dirname(__FILE__) + '/behaviours/*.rb'].each {|file| require file }

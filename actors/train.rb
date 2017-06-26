@@ -30,12 +30,12 @@ class Train < Actor
   private
 
   def at_end_of_rail?
-    (direction_sym == :finish && @d > rail.length) ||
-    (direction_sym == :start && @d < 0)
+    (direction_sym == ENDPOINT_B && @d > rail.length) ||
+    (direction_sym == ENDPOINT_A && @d < 0)
   end
 
   def direction_sym
-    @direction > 0 ? :finish : :start
+    @direction > 0 ? ENDPOINT_B : ENDPOINT_A
   end
 
   def select_new_rail
@@ -44,10 +44,10 @@ class Train < Actor
     return unless new_rail_pair
     self.rail = new_rail_pair.rail
 
-    if new_rail_pair.direction == :finish
+    if new_rail_pair.direction == ENDPOINT_B
       @d = 0
       @direction = 1
-    elsif new_rail_pair.direction == :start
+    elsif new_rail_pair.direction == ENDPOINT_A
       @d = rail.length
       @direction = -1
     else

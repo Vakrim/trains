@@ -2,10 +2,10 @@ class RailsBuilder
 
   attr_reader :nodes
 
-  def start_at(position_or_node)
-    @start = get_node position_or_node
-    @finish = @start
-    @nodes = Set.new([@start])
+  def endpoint_a_at(position_or_node)
+    @endpoint_a = get_node position_or_node
+    @endpoint_b = @endpoint_a
+    @nodes = Set.new([@endpoint_a])
     self
   end
 
@@ -21,18 +21,18 @@ class RailsBuilder
   end
 
   def extend_by(vector)
-    extend_to(@finish.position + vector)
+    extend_to(@endpoint_b.position + vector)
     self
   end
 
   def extend_to(position_or_node)
-    new_finish = get_node(position_or_node)
-    @nodes.add new_finish
+    new_endpoint_b = get_node(position_or_node)
+    @nodes.add new_endpoint_b
     Rail.new({
-      start: @finish,
-      finish: new_finish
+      endpoint_a: @endpoint_b,
+      endpoint_b: new_endpoint_b
     })
-    @finish = new_finish
+    @endpoint_b = new_endpoint_b
     self
   end
 

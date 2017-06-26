@@ -13,8 +13,10 @@ end
 }
 
 5.times {
+  station = Station.new(RailDirection.new(Rail.all.sample, ENDPOINT_B))
+
   Resource.new(
-    container: RailNode.all.sample,
+    container: station,
     type: :apple
   )
 }

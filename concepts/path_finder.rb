@@ -2,25 +2,25 @@ class PathFinder
 
   class PathNotFound < StandardError; end
 
-  def initialize(start, finish)
-    @start = start
-    @finish = finish
+  def initialize(endpoint_a, endpoint_b)
+    @endpoint_a = endpoint_a
+    @endpoint_b = endpoint_b
   end
 
   def find
     closed_set = Set.new []
-    open_set = Set.new [@start]
+    open_set = Set.new [@endpoint_a]
     came_from = {}
 
     g_score = Hash.new(Float::INFINITY)
     f_score = Hash.new(Float::INFINITY)
 
-    g_score[@start] = 0
-    f_score[@start] = heuristic_cost_estimate(@start, @finish)
+    g_score[@endpoint_a] = 0
+    f_score[@endpoint_a] = heuristic_cost_estimate(@endpoint_a, @endpoint_b)
 
     while !open_set.empty? do
       current = open_set.min_by { |node| f_score[node] } # the node in open_set having the lowest f_score[] value
-      if current == @finish
+      if current == @endpoint_b
         return reconstruct_path(came_from, current)
       end
 
@@ -40,7 +40,7 @@ class PathFinder
 
         came_from[rail] = current
         g_score[rail] = tentative_g_score
-        f_score[rail] = g_score[rail] + heuristic_cost_estimate(rail, @finish)
+        f_score[rail] = g_score[rail] + heuristic_cost_estimate(rail, @endpoint_b)
       end
     end
 

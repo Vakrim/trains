@@ -14,12 +14,12 @@ RSpec.describe RailDirection do
       bd = Rail.create(b, d)
       eb = Rail.create(e, b)
 
-      rd = RailDirection.new(ab, :finish)
+      rd = RailDirection.new(ab, ENDPOINT_B)
       next_rails = rd.next_rails
 
-      expect(next_rails).to include RailDirection.new(bc, :finish)
-      expect(next_rails).to include RailDirection.new(bd, :finish)
-      expect(next_rails).to include RailDirection.new(eb, :start)
+      expect(next_rails).to include RailDirection.new(bc, ENDPOINT_B)
+      expect(next_rails).to include RailDirection.new(bd, ENDPOINT_B)
+      expect(next_rails).to include RailDirection.new(eb, ENDPOINT_A)
     end
   end
 end

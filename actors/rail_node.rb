@@ -15,7 +15,7 @@ class RailNode < Actor
 
   def connected_rails
     Rail.select do |rail|
-      self == rail.start || self == rail.finish
+      self == rail.endpoint_a || self == rail.endpoint_b
     end
   end
 
@@ -23,7 +23,7 @@ class RailNode < Actor
     connected_rails
       .reject { |rail| rail == last_rail }
       .map do |rail|
-        RailDirection.new(rail, rail.type_of_node(self) == :finish ? :start : :finish)
+        RailDirection.new(rail, rail.type_of_node(self) == ENDPOINT_B ? ENDPOINT_A : ENDPOINT_B)
       end
   end
 

@@ -1,16 +1,16 @@
 class Rail < Actor
 
-  attr_accessor :start, :finish
+  attr_accessor :endpoint_a, :endpoint_b
 
-  def self.create(start, finish)
-    return false if find { |rail| (rail.start == start && rail.finish == finish) || (rail.start == finish && rail.finish == start)  }
-    new({start: start, finish: finish})
+  def self.create(endpoint_a, endpoint_b)
+    return false if find { |rail| (rail.endpoint_a == endpoint_a && rail.endpoint_b == endpoint_b) || (rail.endpoint_a == endpoint_b && rail.endpoint_b == endpoint_a)  }
+    new({endpoint_a: endpoint_a, endpoint_b: endpoint_b})
   end
 
-  def initialize(options = {})
+  def initialize(endpoint_a:, endpoint_b:)
     super
-    @start = options.fetch :start
-    @finish = options.fetch :finish
+    @endpoint_a = endpoint_a
+    @endpoint_b = endpoint_b
   end
 
   def draw
@@ -18,36 +18,36 @@ class Rail < Actor
     color2 = Gosu::Color::WHITE
 
     Gosu::draw_line(
-      start.position[0],
-      start.position[1],
+      endpoint_a.position[0],
+      endpoint_a.position[1],
       color1,
-      finish.position[0],
-      finish.position[1],
+      endpoint_b.position[0],
+      endpoint_b.position[1],
       color2
     )
   end
 
   def length
-    @length ||= (finish.position - start.position).magnitude
+    @length ||= (endpoint_b.position - endpoint_a.position).magnitude
   end
 
   def direction
-    @direction ||= (finish.position - start.position).normalize
+    @direction ||= (endpoint_b.position - endpoint_a.position).normalize
   end
 
   def position_at(d)
-    start.position + direction * d
+    endpoint_a.position + direction * d
   end
 
   def type_of_node(node)
-    return :start if node == self.start
-    return :finish if node == self.finish
+    return ENDPOINT_A if node == self.endpoint_a
+    return ENDPOINT_B if node == self.endpoint_b
   end
 
   def node(node_type)
     node = {
-      start: start,
-      finish: finish
+      ENDPOINT_A => endpoint_a,
+      ENDPOINT_B => endpoint_b
     }[node_type]
   end
 

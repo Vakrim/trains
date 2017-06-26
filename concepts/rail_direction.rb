@@ -17,6 +17,10 @@ class RailDirection
     end_node.next_rails(rail)
   end
 
+  def direction_vector
+    rail.direction * (direction == ENDPOINT_B ? 1 : -1)
+  end
+
   def end_node
     rail.node(@direction)
   end
