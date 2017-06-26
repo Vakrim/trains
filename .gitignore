@@ -5,3 +5,5 @@ fakeroot
 *.swp
 crate_boot.h
 .bundle
+
+/coverage/
