@@ -52,11 +52,12 @@ class PathFinder
   end
 
   def reconstruct_path(came_from, current)
-    total_path = [current]
-    while came_from.keys.include?(current)  do
-      current = came_from[current]
-      total_path.unshift current
+    Path.new do |path|
+      path.prepend current
+      while came_from.keys.include?(current) do
+        current = came_from[current]
+        path.prepend current
+      end
     end
-    total_path
   end
 end
