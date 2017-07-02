@@ -7,10 +7,18 @@ class RailDirection
     @direction = direction
   end
 
-  def ==(other)
+  def eql?(other)
     other.is_a?(RailDirection) &&
       other.rail == rail &&
       other.direction == direction
+  end
+
+  def ==(other)
+    eql? other
+  end
+
+  def hash
+    [rail, direction].hash
   end
 
   def next_rails

@@ -8,10 +8,6 @@ map = {}
   end
 end
 
-3.times {
-  Train.new(rail: Rail.all.sample)
-}
-
 5.times {
   station = Station.new(RailDirection.new(Rail.all.sample, ENDPOINT_B))
 
@@ -19,4 +15,8 @@ end
     container: station,
     type: :apple
   )
+}
+
+3.times {
+  Train.new(rail: Rail.all.sample)
 }

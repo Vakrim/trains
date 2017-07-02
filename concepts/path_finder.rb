@@ -28,14 +28,14 @@ class PathFinder
       closed_set.add(current)
 
       current.next_rails.each do |rail|
-        continue if closed_set.include? rail
+        next if closed_set.include? rail
 
         tentative_g_score = g_score[current] + rail.length
 
         if !open_set.include?(rail)
           open_set.add(rail)
         elsif tentative_g_score >= g_score[rail]
-          continue
+          next
         end
 
         came_from[rail] = current
